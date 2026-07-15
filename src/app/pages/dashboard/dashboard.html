@@ -1,67 +1,78 @@
-
-
-<div class="contenedor">
-
-    <h1>🌱 AgroAgent IA</h1>
-
-    <p class="subtitulo">
-        Dashboard Administrativo
-    </p>
-
-    <div class="botones">
-
-        <button (click)="irRegistrarCultivo()">
-            🌱 Registrar Cultivo
-        </button>
-
-        <button>
-            📋 Ver Cultivos
-        </button>
-
-        <button>
-            🤖 Recomendaciones
-        </button>
-
-    </div>
-
-    <div class="tarjetas">
-
-        <div class="card">
-            <h3>🌱 Cultivos</h3>
-            <h1>{{ cultivos }}</h1>
+<main class="dashboard">
+    <header class="dashboard-header">
+        <div>
+            <p class="eyebrow">Panel administrativo</p>
+            <h1>AgroAgent IA</h1>
+            <p class="subtitulo">Monitorea cultivos, árboles y recomendaciones desde un solo lugar.</p>
         </div>
 
-        <div class="card">
-            <h3>🤖 Recomendaciones</h3>
-            <h1>{{ recomendaciones }}</h1>
+        <div class="botones">
+            <button (click)="irRegistrarCultivo()">Registrar cultivo</button>
+            <button class="secondary" (click)="irCultivos()">Ver cultivos</button>
+            <button class="secondary" (click)="verRecomendaciones()">Recomendaciones</button>
+        </div>
+    </header>
+
+    <section class="tarjetas">
+        <article class="card">
+            <span>Cultivos</span>
+            <strong>{{ cultivos }}</strong>
+        </article>
+
+        <article class="card">
+            <span>Recomendaciones</span>
+            <strong>{{ recomendaciones }}</strong>
+        </article>
+
+        <article class="card">
+            <span>Árboles</span>
+            <strong>{{ totalArboles }}</strong>
+        </article>
+
+        <article class="card">
+            <span>Municipios</span>
+            <strong>{{ municipios }}</strong>
+        </article>
+    </section>
+
+    <section class="actividad">
+        <div>
+            <p class="eyebrow">Actividad reciente</p>
+            <h2>Último cultivo registrado</h2>
         </div>
 
-        <div class="card">
-            <h3>🌳 Árboles</h3>
-            <h1>{{ totalArboles }}</h1>
+        <div class="detalle">
+            <p>
+                <span>Lote</span>
+                <strong>{{ ultimoLote }}</strong>
+            </p>
+
+            <p>
+                <span>Estado</span>
+                <strong>{{ ultimoEstado }}</strong>
+            </p>
+        </div>
+    </section>
+
+    <section class="historial" *ngIf="mostrarRecomendaciones">
+        <div class="historial-header">
+            <div>
+                <p class="eyebrow">Historial</p>
+                <h2>Recomendaciones generadas</h2>
+            </div>
         </div>
 
-        <div class="card">
-            <h3>📍 Municipios</h3>
-            <h1>{{ municipios }}</h1>
-        </div>
-
-    </div>
-
-    <div class="actividad">
-
-        <h2>Último cultivo registrado</h2>
-
-        <p>
-            <strong>Lote:</strong>
-            {{ ultimoLote }}
+        <p class="estado" *ngIf="cargandoRecomendaciones">Cargando recomendaciones...</p>
+        <p class="estado" *ngIf="!cargandoRecomendaciones && historial.length === 0">
+            Aún no hay recomendaciones guardadas.
         </p>
 
-        <p>
-            <strong>Estado:</strong>
-            {{ ultimoEstado }}
-        </p>
-
-    </div>
-
-</div>
+        <article class="recomendacion" *ngFor="let item of historial">
+            <div>
+                <h3>{{ item.cultivo?.nombreLote || 'Cultivo sin nombre' }}</h3>
+                <span>{{ item.fecha | date:'medium' }}</span>
+            </div>
+            <p>{{ item.recomendacion }}</p>
+        </article>
+    </section>
+</main>

@@ -1,45 +1,56 @@
-<div class="contenedor">
+<main class="contenedor">
+  <header>
+    <div>
+      <p class="eyebrow">Agente IA</p>
+      <h1>Cultivos registrados</h1>
+      <p>Selecciona un cultivo para generar y guardar una recomendación agrícola con IA.</p>
+    </div>
+  </header>
 
-  <h1>🤖 AgroAgent IA</h1>
+  <!-- Estado: Cargando -->
+  <p class="estado" *ngIf="cargandoCultivos">Cargando cultivos...</p>
 
-  <div class="formulario">
+  <!-- Estado: Error sin modal -->
+  <p class="estado error" *ngIf="error && !cultivoSeleccionado">{{ error }}</p>
 
-    <label>Ciudad</label>
-    <input
-      type="text"
-      [(ngModel)]="solicitud.ciudad">
+  <!-- Estado: Sin cultivos -->
+  <p class="estado" *ngIf="!cargandoCultivos && cultivos.length === 0 && !error">
+    No hay cultivos registrados.
+  </p>
 
-    <label>Lote</label>
-    <input
-      type="text"
-      [(ngModel)]="solicitud.lote">
-
-    <label>Hectáreas</label>
-    <input
-      type="number"
-      [(ngModel)]="solicitud.hectareas">
-
-    <label>Edad del cultivo (años)</label>
-    <input
-      type="number"
-      [(ngModel)]="solicitud.edadCultivo">
-
-    <button (click)="generarRecomendacion()">
-      Generar análisis
+  <!-- Lista de cultivos como tarjetas -->
+  <section class="lista-cultivos" *ngIf="!cargandoCultivos && cultivos.length > 0">
+    <button
+      type="button"
+      class="cultivo-card"
+      *ngFor="let cultivo of cultivos"
+      (click)="abrirRecomendacion(cultivo)">
+      <span class="cultivo-nombre">{{ cultivo.nombreLote }}</span>
+      <span class="cultivo-variedad">{{ cultivo.variedad || 'Sin variedad' }}</span>
+      <div class="cultivo-info">
+        <span class="badge">{{ cultivo.estado }}</span>
+        <span class="cultivo-municipio">{{ cultivo.municipio }}</span>
+      </div>
     </button>
+  </section>
 
-  </div>
+  <!-- Modal de recomendación -->
+  <section class="modal-backdrop" *ngIf="cultivoSeleccionado">
+    <article class="modal">
+      <header class="modal-header">
+        <div>
+          <p class="eyebrow">Recomendación IA</p>
+          <h2>{{ cultivoSeleccionado.nombreLote }}</h2>
+          <p class="modal-subtitulo">Variedad: {{ cultivoSeleccionado.variedad }} · {{ cultivoSeleccionado.municipio }}</p>
+        </div>
+        <button type="button" class="cerrar" (click)="cerrarModal()">×</button>
+      </header>
 
-  <div *ngIf="cargando">
-    <h3>Generando recomendación...</h3>
-  </div>
-
-  <div *ngIf="recomendacion">
-
-    <h2>📋 Recomendación IA</h2>
-
-    <pre>{{ recomendacion }}</pre>
-
-  </div>
-
-</div>
+      <div class="modal-body">
+        <p class="estado" *ngIf="cargandoRecomendacion">Generando recomendación con IA... por favor espere.</p>
+        <p class="estado error" *ngIf="error && !cargandoRecomendacion">{{ error }}</p>
+        <pre *ngIf="recomendacion && !cargandoRecomendacion">{{ recomendacion }}</pre>
+      </div>
+    </article>
+  </section>
+</main>

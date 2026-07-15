@@ -1,19 +1,36 @@
-<div class="login-container">
+<main class="login-page">
+    <section class="brand-panel">
+        <p class="eyebrow">AgroAgent IA</p>
+        <h1>Gestión inteligente para cultivos de aguacate Hass</h1>
+        <p class="brand-copy">
+            Centraliza tus lotes, revisa estados y genera recomendaciones agrícolas con apoyo de IA.
+        </p>
+    </section>
 
-    <h2>AgroAgent IA</h2>
+    <section class="login-card">
+        <div>
+            <p class="eyebrow">Bienvenido</p>
+            <h2>Iniciar sesión</h2>
+        </div>
 
-    <input
-        type="email"
-        placeholder="Correo"
-        [(ngModel)]="correo">
+        <label>
+            Correo
+            <input
+                type="email"
+                placeholder="correo@ejemplo.com"
+                [(ngModel)]="correo">
+        </label>
 
-    <input
-        type="password"
-        placeholder="Contraseña"
-        [(ngModel)]="contrasena">
+        <label>
+            Contraseña
+            <input
+                type="password"
+                placeholder="Ingresa tu contraseña"
+                [(ngModel)]="contrasena">
+        </label>
 
-    <button (click)="iniciarSesion()">
-        Iniciar sesión
-    </button>
-
-</div>
+        <button (click)="iniciarSesion()">
+            Entrar al sistema
+        </button>
+    </section>
+</main>

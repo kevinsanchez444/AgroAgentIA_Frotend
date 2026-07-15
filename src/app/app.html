@@ -1,1 +1,5 @@
+<nav class="global-nav" *ngIf="mostrarNavegacion">
+  <button class="nav-btn" (click)="irInicio()">Inicio (Dashboard)</button>
+  <button class="nav-btn logout-btn" (click)="cerrarSesion()">Cerrar sesión</button>
+</nav>
 <router-outlet></router-outlet>

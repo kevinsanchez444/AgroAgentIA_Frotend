@@ -1,1 +1,42 @@
-/* You can add global styles to this file, and also import other style files */
+:root {
+  --color-bg: #eef3ed;
+  --color-surface: #ffffff;
+  --color-surface-muted: #f6f8f3;
+  --color-primary: #2f6f4e;
+  --color-primary-dark: #214f3a;
+  --color-accent: #d9963d;
+  --color-text: #17211b;
+  --color-muted: #657267;
+  --color-border: #dce5db;
+  --shadow-soft: 0 18px 45px rgba(23, 33, 27, 0.12);
+  --shadow-card: 0 10px 28px rgba(23, 33, 27, 0.1);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  min-height: 100%;
+}
+
+body {
+  margin: 0;
+  font-family: Inter, "Segoe UI", Arial, Helvetica, sans-serif;
+  color: var(--color-text);
+  background:
+    radial-gradient(circle at top left, rgba(217, 150, 61, 0.16), transparent 32rem),
+    linear-gradient(135deg, #f6f8f3 0%, var(--color-bg) 100%);
+}
+
+button,
+input,
+select,
+textarea {
+  font: inherit;
+}
+
+button {
+  border: 0;
+}

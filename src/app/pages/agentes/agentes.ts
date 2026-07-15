@@ -1,74 +1,112 @@
-import { Component, inject } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
-
-import { AgenteService } from '../../services/agente.service';
-import { SolicitudRecomendacion } from '../../models/solicitud-recomendacion';
+import { HttpClient } from '@angular/common/http';
+import { Router } from '@angular/router';
+import { Cultivo } from '../../models/cultivo';
 
 @Component({
   selector: 'app-agentes',
   standalone: true,
-  imports: [
-    CommonModule,
-    FormsModule
-  ],
+  imports: [CommonModule],
   templateUrl: './agentes.html',
-  styleUrl: './agentes.css'
+  styleUrls: ['./agentes.css']
 })
-export class AgentesComponent {
+export class AgentesComponent implements OnInit {
 
-  private agenteService = inject(AgenteService);
+  cultivos: Cultivo[] = [];
+  cargandoCultivos = true;
+  error = '';
 
-  solicitud: SolicitudRecomendacion = {
-    ciudad: '',
-    lote: '',
-    hectareas: 0,
-    edadCultivo: 0
-  };
+  cultivoSeleccionado: Cultivo | null = null;
+  cargandoRecomendacion = false;
+  recomendacion = '';
 
-  recomendacion: string = '';
+  private apiCultivos = 'http://localhost:8080/api/cultivos';
+  private apiAgente = 'http://localhost:8080/api/agente';
 
-  cargando = false;
+  constructor(
+    private http: HttpClient,
+    private router: Router,
+    private cdr: ChangeDetectorRef
+  ) {}
 
-  generarRecomendacion() {
-
-    this.cargando = true;
-
-    this.agenteService
-      .generarRecomendacion(this.solicitud)
-      .subscribe({
-
-        next: (respuesta) => {
-
-          this.recomendacion = respuesta.recomendacion;
-
-          this.cargando = false;
-
-        },
-error: (error) => {
-
-    console.error(error);
-
-    if (error.status === 0) {
-
-      this.recomendacion =
-`No fue posible conectar con el servidor.
-
-Verifique que el backend esté ejecutándose.`;
-
-    } else {
-
-      this.recomendacion =
-`Ocurrió un error al comunicarse con AgroAgent IA.`;
-
-    }
-
-    this.cargando = false;
-
-}
-
-      });
-
+  ngOnInit(): void {
+    this.cargarCultivos();
   }
 
+  cargarCultivos(): void {
+    this.cargandoCultivos = true;
+    this.error = '';
+    this.cdr.detectChanges();
+
+    this.http.get<any[]>(this.apiCultivos).subscribe({
+      next: (respuesta) => {
+        console.log('Respuesta cultivos recibida:', respuesta);
+        const lista = Array.isArray(respuesta) ? respuesta : [];
+        this.cultivos = lista.map((item: any) => ({
+          idCultivo: item.idCultivo ?? item.id,
+          nombreLote: item.nombreLote ?? item.nombre_lote ?? '',
+          municipio: item.municipio ?? '',
+          departamento: item.departamento ?? '',
+          hectareas: Number(item.hectareas ?? 0),
+          cantidadArboles: Number(item.cantidadArboles ?? 0),
+          fechaSiembra: item.fechaSiembra ?? '',
+          variedad: item.variedad ?? '',
+          estado: item.estado ?? ''
+        }));
+        this.cargandoCultivos = false;
+        this.cdr.detectChanges();
+        console.log('Cultivos procesados:', this.cultivos.length, this.cultivos);
+      },
+      error: (err) => {
+        console.error('Error cargando cultivos:', err);
+        this.error = 'No se pudieron cargar los cultivos. Verifique que el backend esté funcionando.';
+        this.cargandoCultivos = false;
+        this.cdr.detectChanges();
+      }
+    });
+  }
+
+  abrirRecomendacion(cultivo: Cultivo): void {
+    this.cultivoSeleccionado = cultivo;
+    this.recomendacion = '';
+    this.error = '';
+    this.cargandoRecomendacion = true;
+    this.cdr.detectChanges();
+
+    const body = {
+      ciudad: cultivo.municipio || 'Colombia',
+      lote: cultivo.nombreLote || 'Lote',
+      hectareas: cultivo.hectareas || 1,
+      edadCultivo: 1
+    };
+
+    const url = `${this.apiAgente}/recomendacion/cultivo/${cultivo.idCultivo}`;
+
+    this.http.post<any>(url, body).subscribe({
+      next: (resp) => {
+        this.recomendacion = resp.recomendacion || 'Sin recomendación generada.';
+        this.cargandoRecomendacion = false;
+        this.cdr.detectChanges();
+      },
+      error: (err) => {
+        console.error('Error generando recomendación:', err);
+        this.error = 'Error al generar la recomendación. Intente de nuevo.';
+        this.cargandoRecomendacion = false;
+        this.cdr.detectChanges();
+      }
+    });
+  }
+
+  cerrarModal(): void {
+    this.cultivoSeleccionado = null;
+    this.recomendacion = '';
+    this.error = '';
+    this.cargandoRecomendacion = false;
+    this.cdr.detectChanges();
+  }
+
+  irDashboard(): void {
+    this.router.navigate(['/dashboard']);
+  }
 }
