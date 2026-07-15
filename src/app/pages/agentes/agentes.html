@@ -1,0 +1,45 @@
+<div class="contenedor">
+
+  <h1>🤖 AgroAgent IA</h1>
+
+  <div class="formulario">
+
+    <label>Ciudad</label>
+    <input
+      type="text"
+      [(ngModel)]="solicitud.ciudad">
+
+    <label>Lote</label>
+    <input
+      type="text"
+      [(ngModel)]="solicitud.lote">
+
+    <label>Hectáreas</label>
+    <input
+      type="number"
+      [(ngModel)]="solicitud.hectareas">
+
+    <label>Edad del cultivo (años)</label>
+    <input
+      type="number"
+      [(ngModel)]="solicitud.edadCultivo">
+
+    <button (click)="generarRecomendacion()">
+      Generar análisis
+    </button>
+
+  </div>
+
+  <div *ngIf="cargando">
+    <h3>Generando recomendación...</h3>
+  </div>
+
+  <div *ngIf="recomendacion">
+
+    <h2>📋 Recomendación IA</h2>
+
+    <pre>{{ recomendacion }}</pre>
+
+  </div>
+
+</div>
