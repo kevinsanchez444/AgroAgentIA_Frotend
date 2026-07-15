@@ -1,0 +1,91 @@
+<div class="contenedor">
+
+    <h1>🌱 Registrar Cultivo</h1>
+
+    <form (ngSubmit)="guardarCultivo()">
+
+        <div class="grupo">
+            <label>Nombre del lote</label>
+            <input
+                type="text"
+                name="nombreLote"
+                [(ngModel)]="cultivo.nombreLote"
+                required>
+        </div>
+
+        <div class="grupo">
+            <label>Municipio</label>
+            <input
+                type="text"
+                name="municipio"
+                [(ngModel)]="cultivo.municipio"
+                required>
+        </div>
+
+        <div class="grupo">
+            <label>Departamento</label>
+            <input
+                type="text"
+                name="departamento"
+                [(ngModel)]="cultivo.departamento"
+                required>
+        </div>
+
+        <div class="grupo">
+            <label>Hectáreas</label>
+            <input
+                type="number"
+                name="hectareas"
+                [(ngModel)]="cultivo.hectareas"
+                required>
+        </div>
+
+        <div class="grupo">
+            <label>Cantidad de árboles</label>
+            <input
+                type="number"
+                name="cantidadArboles"
+                [(ngModel)]="cultivo.cantidadArboles"
+                required>
+        </div>
+
+        <div class="grupo">
+            <label>Fecha de siembra</label>
+            <input
+                type="date"
+                name="fechaSiembra"
+                [(ngModel)]="cultivo.fechaSiembra"
+                required>
+        </div>
+
+        <div class="grupo">
+            <label>Variedad</label>
+            <input
+                type="text"
+                name="variedad"
+                [(ngModel)]="cultivo.variedad"
+                required>
+        </div>
+
+        <div class="grupo">
+            <label>Estado</label>
+
+            <select
+                name="estado"
+                [(ngModel)]="cultivo.estado">
+
+                <option value="Activo">Activo</option>
+                <option value="Producción">Producción</option>
+                <option value="Renovación">Renovación</option>
+
+            </select>
+
+        </div>
+
+        <button type="submit">
+            Guardar Cultivo
+        </button>
+
+    </form>
+
+</div>

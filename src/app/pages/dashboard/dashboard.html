@@ -1,0 +1,67 @@
+
+
+<div class="contenedor">
+
+    <h1>🌱 AgroAgent IA</h1>
+
+    <p class="subtitulo">
+        Dashboard Administrativo
+    </p>
+
+    <div class="botones">
+
+        <button (click)="irRegistrarCultivo()">
+            🌱 Registrar Cultivo
+        </button>
+
+        <button>
+            📋 Ver Cultivos
+        </button>
+
+        <button>
+            🤖 Recomendaciones
+        </button>
+
+    </div>
+
+    <div class="tarjetas">
+
+        <div class="card">
+            <h3>🌱 Cultivos</h3>
+            <h1>{{ cultivos }}</h1>
+        </div>
+
+        <div class="card">
+            <h3>🤖 Recomendaciones</h3>
+            <h1>{{ recomendaciones }}</h1>
+        </div>
+
+        <div class="card">
+            <h3>🌳 Árboles</h3>
+            <h1>{{ totalArboles }}</h1>
+        </div>
+
+        <div class="card">
+            <h3>📍 Municipios</h3>
+            <h1>{{ municipios }}</h1>
+        </div>
+
+    </div>
+
+    <div class="actividad">
+
+        <h2>Último cultivo registrado</h2>
+
+        <p>
+            <strong>Lote:</strong>
+            {{ ultimoLote }}
+        </p>
+
+        <p>
+            <strong>Estado:</strong>
+            {{ ultimoEstado }}
+        </p>
+
+    </div>
+
+</div>
