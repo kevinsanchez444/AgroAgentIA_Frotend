@@ -12,6 +12,9 @@ import { AuthService } from '../../services/auth.service';
 })
 export class LoginComponent {
 
+  modoRegistro = false;
+
+  nombre = '';
   correo = '';
   contrasena = '';
 
@@ -22,12 +25,11 @@ export class LoginComponent {
 
   iniciarSesion() {
 
-    this.authService.login(this.correo, this.contrasena)
+    this.authService
+      .login(this.correo, this.contrasena)
       .subscribe({
 
-        next: (respuesta) => {
-
-          console.log(respuesta);
+        next: () => {
 
           alert('Inicio de sesión exitoso');
 
@@ -35,11 +37,65 @@ export class LoginComponent {
 
         },
 
-        error: (error) => {
-
-          console.log(error);
+        error: () => {
 
           alert('Correo o contraseña incorrectos');
+
+        }
+
+      });
+
+  }
+
+  registrar() {
+
+    this.authService
+      .register(
+        this.nombre,
+        this.correo,
+        this.contrasena
+      )
+      .subscribe({
+
+        next: () => {
+
+          // Después del registro inicia sesión automáticamente
+          this.authService
+            .login(this.correo, this.contrasena)
+            .subscribe({
+
+              next: () => {
+
+                alert('Usuario registrado correctamente');
+
+                this.router.navigate(['/dashboard']);
+
+              },
+
+              error: () => {
+
+                alert('Usuario registrado, pero no fue posible iniciar sesión automáticamente.');
+
+                // Si falla el login automático, vuelve al formulario de login
+                this.modoRegistro = false;
+
+              }
+
+            });
+
+        },
+
+        error: (err) => {
+
+          if (err.error) {
+
+            alert(err.error);
+
+          } else {
+
+            alert('No fue posible registrar el usuario');
+
+          }
 
         }
 

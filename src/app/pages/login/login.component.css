@@ -1,24 +1,83 @@
 .login-container{
 
-    width:350px;
-    margin:100px auto;
+    width:380px;
+
+    margin:80px auto;
+
+    padding:30px;
+
+    border-radius:10px;
+
+    box-shadow:0 0 10px rgba(0,0,0,.15);
 
     display:flex;
+
     flex-direction:column;
+
     gap:15px;
+
+}
+
+h2{
+
+    text-align:center;
 
 }
 
 input{
 
-    padding:10px;
+    padding:12px;
+
     border-radius:8px;
+
+    border:1px solid #ccc;
 
 }
 
 button{
 
-    padding:10px;
+    padding:12px;
+
+    border:none;
+
+    border-radius:8px;
+
     cursor:pointer;
+
+    background:#2e7d32;
+
+    color:white;
+
+    font-size:16px;
+
+}
+
+button:hover{
+
+    background:#256428;
+
+}
+
+p{
+
+    text-align:center;
+
+}
+
+a{
+
+    color:#2e7d32;
+
+    cursor:pointer;
+
+    font-weight:bold;
+
+    text-decoration:none;
+
+}
+
+a:hover{
+
+    text-decoration:underline;
 
 }

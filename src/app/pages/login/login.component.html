@@ -2,6 +2,15 @@
 
     <h2>AgroAgent IA</h2>
 
+    @if(modoRegistro){
+
+        <input
+            type="text"
+            placeholder="Nombre"
+            [(ngModel)]="nombre">
+
+    }
+
     <input
         type="email"
         placeholder="Correo"
@@ -12,8 +21,48 @@
         placeholder="Contraseña"
         [(ngModel)]="contrasena">
 
-    <button (click)="iniciarSesion()">
-        Iniciar sesión
-    </button>
+    @if(!modoRegistro){
+
+        <button (click)="iniciarSesion()">
+
+            Iniciar sesión
+
+        </button>
+
+        <p>
+
+            ¿No tienes cuenta?
+
+            <a (click)="modoRegistro=true">
+
+                Registrarse
+
+            </a>
+
+        </p>
+
+    }
+
+    @if(modoRegistro){
+
+        <button (click)="registrar()">
+
+            Crear cuenta
+
+        </button>
+
+        <p>
+
+            ¿Ya tienes cuenta?
+
+            <a (click)="modoRegistro=false">
+
+                Iniciar sesión
+
+            </a>
+
+        </p>
+
+    }
 
 </div>
