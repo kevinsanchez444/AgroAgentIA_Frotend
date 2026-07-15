@@ -8,7 +8,7 @@ export const routes: Routes = [
 
   {
     path: '',
-    redirectTo: 'agentes',
+    redirectTo: 'login',
     pathMatch: 'full'
   },
 

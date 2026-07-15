@@ -22,7 +22,7 @@ export class RegistrarCultivo {
     cantidadArboles: 0,
     fechaSiembra: '',
     variedad: '',
-    estado: ''
+    estado: 'Activo'
   };
 
   constructor(
@@ -36,11 +36,9 @@ export class RegistrarCultivo {
 
       next: () => {
 
-  alert('Cultivo registrado correctamente');
-
-  this.router.navigate(['/dashboard']);
-
-},
+        alert('Cultivo registrado correctamente');
+        this.router.navigate(['/dashboard']);
+      },
 
       error: (error) => {
         console.error(error);

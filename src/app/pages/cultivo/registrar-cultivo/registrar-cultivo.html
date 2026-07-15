@@ -1,9 +1,11 @@
-<div class="contenedor">
-
-    <h1>🌱 Registrar Cultivo</h1>
+<main class="contenedor">
+    <header>
+        <p class="eyebrow">Nuevo registro</p>
+        <h1>Registrar cultivo</h1>
+        <p>Agrega la información del lote para alimentar el dashboard y las recomendaciones IA.</p>
+    </header>
 
     <form (ngSubmit)="guardarCultivo()">
-
         <div class="grupo">
             <label>Nombre del lote</label>
             <input
@@ -36,6 +38,7 @@
             <input
                 type="number"
                 name="hectareas"
+                min="0"
                 [(ngModel)]="cultivo.hectareas"
                 required>
         </div>
@@ -45,6 +48,7 @@
             <input
                 type="number"
                 name="cantidadArboles"
+                min="0"
                 [(ngModel)]="cultivo.cantidadArboles"
                 required>
         </div>
@@ -69,23 +73,17 @@
 
         <div class="grupo">
             <label>Estado</label>
-
             <select
                 name="estado"
                 [(ngModel)]="cultivo.estado">
-
                 <option value="Activo">Activo</option>
                 <option value="Producción">Producción</option>
                 <option value="Renovación">Renovación</option>
-
             </select>
-
         </div>
 
         <button type="submit">
-            Guardar Cultivo
+            Guardar cultivo
         </button>
-
     </form>
-
-</div>
+</main>

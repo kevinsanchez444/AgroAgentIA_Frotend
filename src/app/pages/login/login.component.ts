@@ -21,30 +21,17 @@ export class LoginComponent {
   ) {}
 
   iniciarSesion() {
-
     this.authService.login(this.correo, this.contrasena)
       .subscribe({
-
-        next: (respuesta) => {
-
-          console.log(respuesta);
-
+        next: () => {
           alert('Inicio de sesión exitoso');
-
           this.router.navigate(['/dashboard']);
-
         },
-
         error: (error) => {
-
           console.log(error);
-
           alert('Correo o contraseña incorrectos');
-
         }
-
       });
-
   }
 
 }

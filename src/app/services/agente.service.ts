@@ -25,4 +25,16 @@ export class AgenteService {
 
   }
 
+  generarRecomendacionPorCultivo(
+    idCultivo: number,
+    solicitud: SolicitudRecomendacion
+  ): Observable<RespuestaRecomendacion> {
+
+    return this.http.post<RespuestaRecomendacion>(
+      `${this.api}/recomendacion/cultivo/${idCultivo}`,
+      solicitud
+    );
+
+  }
+
 }
